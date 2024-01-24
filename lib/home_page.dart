@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:applications/pallete.dart';
+import 'package:applications/palette.dart';
+import 'package:applications/feature_box.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
                   width: 120,
                   margin: const EdgeInsets.only(top: 4),
                   decoration: const BoxDecoration(
-                    color: Pallete.assistantCircleColor,
+                    color: Palette.assistantCircleColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             ),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Pallete.borderColor,
+                color: Palette.borderColor,
               ),
               borderRadius: BorderRadius.circular(20).copyWith(
                 topLeft: Radius.zero,
@@ -66,23 +67,47 @@ class _HomePageState extends State<HomePage> {
               'Good morning, what can I do for you',
               style: TextStyle(
                 fontFamily: 'Cera Pro',
-                color: Pallete.mainFontColor,
+                color: Palette.mainFontColor,
                 fontSize: 25,
               ),
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(
+              top: 10,
+              left: 22,
+            ),
+            alignment: Alignment.centerLeft,
             child: const Text(
               'Here are a few features',
               style: TextStyle(
                 fontFamily: 'Cera Pro',
-                color: Pallete.mainFontColor,
+                color: Palette.mainFontColor,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
+          const Column(
+            children: [
+              FeatureBox(
+                color: Palette.firstSuggestionBoxColor,
+                headerText: 'ChatGPT',
+                descriptionText: 'A smarter way to stay organized with ChatGPT',
+              ),
+              FeatureBox(
+                color: Palette.secondSuggestionBoxColor,
+                headerText: 'Dall-E',
+                descriptionText: 'Get inspired and stay creative with your personal assistant powered by Dall-E',
+              ),
+              FeatureBox(
+                color: Palette.thirdSuggestionBoxColor,
+                headerText: 'Smart Voice Assistant',
+                descriptionText: 'Get the best of both worlds with a voice assistant powered by Dall-E and ChatGPT',
+              ),
+            ],
+          )
         ],
       ),
     );
