@@ -32,13 +32,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Container(
-                height: 120,
-                width: 120,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/virtualAssistant.png'),
+              Center(
+                child: Container(
+                  height: 120,
+                  width: 120,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/virtualAssistant.png'),
+                    ),
                   ),
                 ),
               ),
