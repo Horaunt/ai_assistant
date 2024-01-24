@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          const Column(
+          Column(
             children: [
               FeatureBox(
                 color: Palette.firstSuggestionBoxColor,
@@ -109,6 +109,17 @@ class _HomePageState extends State<HomePage> {
             ],
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Palette.firstSuggestionBoxColor,
+        onPressed: () {},
+        child:  Icon(
+          Icons.mic,
+          color: Colors.white, // Set the icon color to white
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0), // Adjust the border radius as needed
+        ),
       ),
     );
   }
