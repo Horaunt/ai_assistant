@@ -5,7 +5,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -159,10 +159,13 @@ class _HomePageState extends State<HomePage> {
         onPressed: ()async {
           if(await speechToText.hasPermission && speechToText.isNotListening){
             await startListening();
+            print('started listening');
           }else if(speechToText.isListening){
             await stopListening();
+            print('stopped listening');
           } else{
             initSpeechToText();
+            print('initialized speech to text');
           }
         },
         child: const Icon(Icons.mic),

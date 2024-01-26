@@ -1,8 +1,6 @@
 import 'package:applications/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:applications/palette.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 void main() {
   runApp(const MyApp());
