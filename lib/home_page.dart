@@ -3,7 +3,7 @@ import 'package:applications/palette.dart';
 import 'package:applications/feature_box.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Column(
+          const Column(
             children: [
               FeatureBox(
                 color: Palette.firstSuggestionBoxColor,
@@ -112,14 +112,8 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Palette.firstSuggestionBoxColor,
-        onPressed: () {},
-        child:  Icon(
-          Icons.mic,
-          color: Colors.white, // Set the icon color to white
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0), // Adjust the border radius as needed
-        ),
+        onPressed: (){},
+        child: const Icon(Icons.mic),
       ),
     );
   }
