@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   void onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       lastWords = result.recognizedWords;
+      print(lastWords);
     });
   }
 
@@ -139,17 +140,20 @@ class _HomePageState extends State<HomePage> {
                 FeatureBox(
                   color: Palette.firstSuggestionBoxColor,
                   headerText: 'ChatGPT',
-                  descriptionText: 'A smarter way to stay organized with ChatGPT',
+                  descriptionText:
+                      'A smarter way to stay organized with ChatGPT',
                 ),
                 FeatureBox(
                   color: Palette.secondSuggestionBoxColor,
                   headerText: 'Dall-E',
-                  descriptionText: 'Get inspired and stay creative with your personal assistant powered by Dall-E',
+                  descriptionText:
+                      'Get inspired and stay creative with your personal assistant powered by Dall-E',
                 ),
                 FeatureBox(
                   color: Palette.thirdSuggestionBoxColor,
                   headerText: 'Smart Voice Assistant',
-                  descriptionText: 'Get the best of both worlds with a voice assistant powered by Dall-E and ChatGPT',
+                  descriptionText:
+                      'Get the best of both worlds with a voice assistant powered by Dall-E and ChatGPT',
                 ),
               ],
             )
@@ -158,15 +162,16 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Palette.firstSuggestionBoxColor,
-        onPressed: ()async {
-          if(await speechToText.hasPermission && speechToText.isNotListening){
+        onPressed: () async {
+          if (await speechToText.hasPermission && speechToText.isNotListening) {
             await startListening();
             print('started listening');
-          }else if(speechToText.isListening){
-            await openAIService.isArtPromptAPI(lastWords);
+          } else if (speechToText.isListening) {
             await stopListening();
-            print('stopped listening');
-          } else{
+            final speech = await openAIService.isArtPromptAPI(lastWords);
+            print('speech');
+            // print(lastWords);
+          } else {
             initSpeechToText();
             print('initialized speech to text');
           }

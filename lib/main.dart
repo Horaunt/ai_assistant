@@ -15,11 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'assistant',
       theme: ThemeData.light(useMaterial3: true).copyWith(
-        scaffoldBackgroundColor: Palette.whiteColor,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Palette.whiteColor,
-        )
-      ),
+          scaffoldBackgroundColor: Palette.whiteColor,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Palette.whiteColor,
+          )),
       home: const HomePage(),
     );
   }

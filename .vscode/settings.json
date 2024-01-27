@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/horaunt/Development/Apps/ai_assistant/linux/flutter"
+    "cmake.sourceDirectory": "/home/horaunt/Development/Apps/ai_assistant/linux/flutter",
+    "java.compile.nullAnalysis.mode": "automatic"
 }
