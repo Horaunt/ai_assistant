@@ -15,10 +15,15 @@ class OpenAIService{
           "model": "gpt-3.5-turbo",
           "messages" : [{
             'role': 'user',
-            'content' : 'Does this message want to generate an AI picture, image, art or anything similar?'
+            'content' : 'Does this message want to generate an AI picture, image, art or anything similar? $prompt .Simply answer with a yes or a no.'
           }]
         })
       );
+      print(res.body);
+      if (res.statusCode == 200){
+        print('Ok');
+      }
+      return res.body;
     }catch(e){
       return e.toString();
     }
