@@ -109,71 +109,84 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
-                top: 30,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Palette.borderColor,
+            Visibility(
+              visible: generatedImageUrl == null,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
                 ),
-                borderRadius: BorderRadius.circular(20).copyWith(
-                  topLeft: Radius.zero,
+                margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
+                  top: 30,
                 ),
-              ),
-              child: Text(
-                generatedContent == null
-                ? 'Good morning, what can I do for you'
-                : generatedContent!,
-                style: TextStyle(
-                  fontFamily: 'Cera Pro',
-                  color: Palette.mainFontColor,
-                  fontSize: generatedContent == null ? 20 : 15,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Palette.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(20).copyWith(
+                    topLeft: Radius.zero,
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.only(
-                top: 10,
-                left: 22,
-              ),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                'Here are a few features',
-                style: TextStyle(
-                  fontFamily: 'Cera Pro',
-                  color: Palette.mainFontColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                child: Text(
+                  generatedContent == null
+                  ? 'Good morning, what can I do for you'
+                  : generatedContent!,
+                  style: TextStyle(
+                    fontFamily: 'Cera Pro',
+                    color: Palette.mainFontColor,
+                    fontSize: generatedContent == null ? 20 : 15,
+                  ),
                 ),
               ),
             ),
-            const Column(
-              children: [
-                FeatureBox(
-                  color: Palette.firstSuggestionBoxColor,
-                  headerText: 'ChatGPT',
-                  descriptionText:
-                      'A smarter way to stay organized with ChatGPT',
+            if(generatedImageUrl != null) Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ClipRRect(borderRadius: BorderRadius.circular(20),child: Image.network(generatedImageUrl!)),
+            ),
+            Visibility(
+              visible: generatedImageUrl == null && generatedContent == null,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(
+                  top: 10,
+                  left: 22,
                 ),
-                FeatureBox(
-                  color: Palette.secondSuggestionBoxColor,
-                  headerText: 'Dall-E',
-                  descriptionText:
-                      'Get inspired and stay creative with your personal assistant powered by Dall-E',
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  'Here are a few features',
+                  style: TextStyle(
+                    fontFamily: 'Cera Pro',
+                    color: Palette.mainFontColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                FeatureBox(
-                  color: Palette.thirdSuggestionBoxColor,
-                  headerText: 'Smart Voice Assistant',
-                  descriptionText:
-                      'Get the best of both worlds with a voice assistant powered by Dall-E and ChatGPT',
-                ),
-              ],
+              ),
+            ),
+            Visibility(
+              visible: generatedContent == null && generatedImageUrl == null,
+              child: const Column(
+                children: [
+                  FeatureBox(
+                    color: Palette.firstSuggestionBoxColor,
+                    headerText: 'ChatGPT',
+                    descriptionText:
+                        'A smarter way to stay organized with ChatGPT',
+                  ),
+                  FeatureBox(
+                    color: Palette.secondSuggestionBoxColor,
+                    headerText: 'Dall-E',
+                    descriptionText:
+                        'Get inspired and stay creative with your personal assistant powered by Dall-E',
+                  ),
+                  FeatureBox(
+                    color: Palette.thirdSuggestionBoxColor,
+                    headerText: 'Smart Voice Assistant',
+                    descriptionText:
+                        'Get the best of both worlds with a voice assistant powered by Dall-E and ChatGPT',
+                  ),
+                ],
+              ),
             )
           ],
         ),
@@ -209,7 +222,7 @@ class _HomePageState extends State<HomePage> {
             print('initialized speech to text');
           }
         },
-        child: const Icon(Icons.mic),
+        child:  Icon(speechToText.isListening ? Icons.stop : Icons.mic),
       ),
     );
   }
