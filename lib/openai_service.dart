@@ -92,5 +92,41 @@ class OpenAIService{
   }
 
   Future<String> dallEAPI(String prompt) async {
-    return 'DallE API';}
+    messages.add({
+      'role': 'user',
+      'content': prompt,
+    });
+    try{
+      final res = await http.post(Uri.parse('https://api.openai.com/v1/images/generations'),
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer $openAIAPKey',
+          },
+
+          body: jsonEncode({
+            "prompt": prompt,
+            'n':1,
+          })
+      );
+
+      if (res.statusCode == 200) {
+        String imageURL = jsonDecode(res.body)['data'][0]['url'];
+        imageURL = imageURL.trim();
+
+        messages.add({
+          'role': 'assistant',
+          'content': imageURL,
+        });
+        return imageURL;
+      } else {
+        print('Request failed with status: ${res.statusCode}');
+        print(res.body);
+      }
+
+      return "An internal error occurred.";
+    }catch(e){
+      print("Error in isArtPromptAPI: $e");
+      return e.toString();
+    }
+  }
 }
