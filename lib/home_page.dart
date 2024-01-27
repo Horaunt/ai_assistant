@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:applications/openai_service.dart';
 import 'package:flutter/material.dart';
 import 'package:applications/palette.dart';
@@ -21,7 +22,8 @@ class _HomePageState extends State<HomePage> {
   final OpenAIService openAIService = OpenAIService();
   String? generatedContent;
   String? generatedImageUrl;
-
+  int start = 200;
+  int delay = 200;
   @override
   void initState() {
     super.initState();
@@ -75,66 +77,70 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Assistant'),
+        title: BounceInDown(child: const Text('Assistant')),
         leading: const Icon(Icons.menu),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Stack(
-              children: [
-                Center(
-                  child: Container(
-                    height: 120,
-                    width: 120,
-                    margin: const EdgeInsets.only(top: 4),
-                    decoration: const BoxDecoration(
-                      color: Palette.assistantCircleColor,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    height: 120,
-                    width: 120,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/virtualAssistant.png'),
+            ZoomIn(
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      height: 120,
+                      width: 120,
+                      margin: const EdgeInsets.only(top: 4),
+                      decoration: const BoxDecoration(
+                        color: Palette.assistantCircleColor,
+                        shape: BoxShape.circle,
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Center(
+                    child: Container(
+                      height: 120,
+                      width: 120,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/virtualAssistant.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Visibility(
-              visible: generatedImageUrl == null,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
-                  top: 30,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Palette.borderColor,
+            FadeInRight(
+              child: Visibility(
+                visible: generatedImageUrl == null,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
                   ),
-                  borderRadius: BorderRadius.circular(20).copyWith(
-                    topLeft: Radius.zero,
+                  margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
+                    top: 30,
                   ),
-                ),
-                child: Text(
-                  generatedContent == null
-                  ? 'Good morning, what can I do for you'
-                  : generatedContent!,
-                  style: TextStyle(
-                    fontFamily: 'Cera Pro',
-                    color: Palette.mainFontColor,
-                    fontSize: generatedContent == null ? 20 : 15,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Palette.borderColor,
+                    ),
+                    borderRadius: BorderRadius.circular(20).copyWith(
+                      topLeft: Radius.zero,
+                    ),
+                  ),
+                  child: Text(
+                    generatedContent == null
+                    ? 'Good morning, what can I do for you'
+                    : generatedContent!,
+                    style: TextStyle(
+                      fontFamily: 'Cera Pro',
+                      color: Palette.mainFontColor,
+                      fontSize: generatedContent == null ? 20 : 15,
+                    ),
                   ),
                 ),
               ),
@@ -143,47 +149,58 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(10.0),
               child: ClipRRect(borderRadius: BorderRadius.circular(20),child: Image.network(generatedImageUrl!)),
             ),
-            Visibility(
-              visible: generatedImageUrl == null && generatedContent == null,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(
-                  top: 10,
-                  left: 22,
-                ),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Here are a few features',
-                  style: TextStyle(
-                    fontFamily: 'Cera Pro',
-                    color: Palette.mainFontColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            SlideInLeft(
+              child: Visibility(
+                visible: generatedImageUrl == null && generatedContent == null,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(
+                    top: 10,
+                    left: 22,
+                  ),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    'Here are a few features',
+                    style: TextStyle(
+                      fontFamily: 'Cera Pro',
+                      color: Palette.mainFontColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
             Visibility(
               visible: generatedContent == null && generatedImageUrl == null,
-              child: const Column(
+              child:  Column(
                 children: [
-                  FeatureBox(
-                    color: Palette.firstSuggestionBoxColor,
-                    headerText: 'ChatGPT',
-                    descriptionText:
-                        'A smarter way to stay organized with ChatGPT',
+                  SlideInLeft(
+                    delay: Duration(milliseconds: start),
+                    child: const FeatureBox(
+                      color: Palette.firstSuggestionBoxColor,
+                      headerText: 'ChatGPT',
+                      descriptionText:
+                          'A smarter way to stay organized with ChatGPT',
+                    ),
                   ),
-                  FeatureBox(
-                    color: Palette.secondSuggestionBoxColor,
-                    headerText: 'Dall-E',
-                    descriptionText:
-                        'Get inspired and stay creative with your personal assistant powered by Dall-E',
+                  SlideInLeft(
+                    delay: Duration(milliseconds: start + delay),
+                    child: const FeatureBox(
+                      color: Palette.secondSuggestionBoxColor,
+                      headerText: 'Dall-E',
+                      descriptionText:
+                          'Get inspired and stay creative with your personal assistant powered by Dall-E',
+                    ),
                   ),
-                  FeatureBox(
-                    color: Palette.thirdSuggestionBoxColor,
-                    headerText: 'Smart Voice Assistant',
-                    descriptionText:
-                        'Get the best of both worlds with a voice assistant powered by Dall-E and ChatGPT',
+                  SlideInLeft(
+                    delay: Duration(milliseconds: start + delay * 2),
+                    child: const FeatureBox(
+                      color: Palette.thirdSuggestionBoxColor,
+                      headerText: 'Smart Voice Assistant',
+                      descriptionText:
+                          'Get the best of both worlds with a voice assistant powered by Dall-E and ChatGPT',
+                    ),
                   ),
                 ],
               ),
@@ -191,38 +208,41 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Palette.firstSuggestionBoxColor,
-        onPressed: () async {
-          if (await speechToText.hasPermission && speechToText.isNotListening) {
-            await startListening();
-            print('started listening');
-          } else if (speechToText.isListening) {
-            await stopListening();
-            final speech = await openAIService.isArtPromptAPI(lastWords);
-            if (speech.contains('https')){
-              generatedImageUrl = speech;
-              generatedContent = null;
-              setState(() {
-
-              });
-            } else{
-              generatedImageUrl = null;
-              generatedContent = speech;
-              setState(() {
-
-              });
-              await systemSpeak(speech);
+      floatingActionButton: ZoomIn(
+        delay: Duration(milliseconds: start + delay * 3),
+        child: FloatingActionButton(
+          backgroundColor: Palette.firstSuggestionBoxColor,
+          onPressed: () async {
+            if (await speechToText.hasPermission && speechToText.isNotListening) {
+              await startListening();
+              print('started listening');
+            } else if (speechToText.isListening) {
+              await stopListening();
+              final speech = await openAIService.isArtPromptAPI(lastWords);
+              if (speech.contains('https')){
+                generatedImageUrl = speech;
+                generatedContent = null;
+                setState(() {
+        
+                });
+              } else{
+                generatedImageUrl = null;
+                generatedContent = speech;
+                setState(() {
+        
+                });
+                await systemSpeak(speech);
+              }
+              print('speech');
+        
+              // print(lastWords);
+            } else {
+              initSpeechToText();
+              print('initialized speech to text');
             }
-            print('speech');
-
-            // print(lastWords);
-          } else {
-            initSpeechToText();
-            print('initialized speech to text');
-          }
-        },
-        child:  Icon(speechToText.isListening ? Icons.stop : Icons.mic),
+          },
+          child:  Icon(speechToText.isListening ? Icons.stop : Icons.mic),
+        ),
       ),
     );
   }
