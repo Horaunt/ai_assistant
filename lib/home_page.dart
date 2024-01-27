@@ -2,6 +2,7 @@ import 'package:applications/openai_service.dart';
 import 'package:flutter/material.dart';
 import 'package:applications/palette.dart';
 import 'package:applications/feature_box.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -14,13 +15,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final speechToText = SpeechToText();
+  final flutterTts = FlutterTts();
+
   String lastWords = '';
   final OpenAIService openAIService = OpenAIService();
+  String? generatedContent;
+  String? generatedImageUrl;
 
   @override
   void initState() {
     super.initState();
     initSpeechToText();
+    initTexttoSpeech();
+  }
+
+  Future<void> initTexttoSpeech() async {
+    await flutterTts.setSharedInstance(true);
+    setState(() {});
   }
 
   Future<void> initSpeechToText() async {
@@ -49,10 +60,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void> systemSpeak(String content) async {
+    await flutterTts.speak(content);
+  }
+
   @override
   void dispose() {
     speechToText.stop();
     super.dispose();
+    flutterTts.stop();
   }
 
   @override
@@ -109,12 +125,14 @@ class _HomePageState extends State<HomePage> {
                   topLeft: Radius.zero,
                 ),
               ),
-              child: const Text(
-                'Good morning, what can I do for you',
+              child: Text(
+                generatedContent == null
+                ? 'Good morning, what can I do for you'
+                : generatedContent!,
                 style: TextStyle(
                   fontFamily: 'Cera Pro',
                   color: Palette.mainFontColor,
-                  fontSize: 20,
+                  fontSize: generatedContent == null ? 20 : 15,
                 ),
               ),
             ),
@@ -169,7 +187,22 @@ class _HomePageState extends State<HomePage> {
           } else if (speechToText.isListening) {
             await stopListening();
             final speech = await openAIService.isArtPromptAPI(lastWords);
+            if (speech.contains('https')){
+              generatedImageUrl = speech;
+              generatedContent = null;
+              setState(() {
+
+              });
+            } else{
+              generatedImageUrl = null;
+              generatedContent = speech;
+              setState(() {
+
+              });
+              await systemSpeak(speech);
+            }
             print('speech');
+
             // print(lastWords);
           } else {
             initSpeechToText();
